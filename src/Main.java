@@ -5,6 +5,8 @@ import java.util.Scanner;
 //Numero maximo de profundidad: 
 public class Main{
     public static void main(String []args){
+        long startTime = System.nanoTime();
+        
         Scanner sc = new Scanner(System.in);
         int height = sc.nextInt();
         int matrix[][] = new int[height][height];
@@ -13,17 +15,22 @@ public class Main{
                 matrix[i][j] = sc.nextInt();
             }
         }
-        
+
         int colors = 3;
         Estado inicial = new Estado(matrix);
-        BFS bfs = new BFS(inicial,colors);
-        Path solucion = bfs.findBestPath();
+        BFS bfs        = new BFS(inicial,colors);
+        Path solucion  = bfs.findBestPath();
         if(solucion != null){
             System.out.println(solucion);
         }
         else{
             System.out.printf("No solution found or there was an error with the algorithm\n");
         }
+
+
+        long endTime  = System.nanoTime();
+        long duration = (endTime - startTime); 
+        System.out.println("Total time:" + duration/1000000000 + "." + duration%1000000000 );
     }
 }
 

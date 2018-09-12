@@ -25,8 +25,7 @@ class BFS{
     }
 
     Path findBestPath(){
-        long startTime = System.nanoTime();
-        long prevTime = startTime;
+        
         System.out.println("Estado inicial: ");
         System.out.println(this.inicial);
 
@@ -38,15 +37,7 @@ class BFS{
             if(++count%30 == 0){
                 System.out.printf("Current: %d\n",current.getHeuristic());
             }
-            
-
-
             if(current.isGoal()){
-
-                long endTime = System.nanoTime();
-                long duration = (endTime - startTime); 
-                System.out.println("Total time:" + duration/1000000000 + "." + duration%1000000000 );
-
                 return current;
             }
             else if( current.getDepth() >= this.profundidadMaxima ){
