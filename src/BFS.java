@@ -8,6 +8,7 @@ class BFS{
     PriorityQueue<Path> open;
     ArrayList<Path> closed;
 
+    Path result;
     int profundidadMaxima;
     int colores;
 
@@ -21,6 +22,7 @@ class BFS{
         this.inicial = inicial;
         open.add(new Path(inicial));
         this.colores = colores;
+        this.result = new Path();
         this.profundidadMaxima = this.calculaHorizonte();
     }
 
@@ -29,30 +31,34 @@ class BFS{
         while(open.size() != 0){
             Path current = open.poll();
             
-            if(++count%30 == 0){
+            /*if(++count%300 == 0){
                 System.out.printf("Current: %f\n",current.getHeuristic());
                 System.out.println(current);
                 System.out.println("-----------------------");
             }
+            */
             if(current.isGoal()){
-                /*
-                System.out.println("OPEN------------------------------------");
-                System.out.println(open);
-                System.out.println("OPEN------------------------------------");
-                */
+                result.concatenate(current.camino);
                 System.out.println("Listo:");
-                System.out.println(current);
-                System.out.println("listo");
-                
-                return current;
+                System.out.println(result);
+                System.out.println("listo");                
+                return result;
             }
             else if( current.getDepth() >= this.profundidadMaxima ){
-                //clear everything
-                //add current to open 
                 open.clear();
                 closed.clear();
-                current.truncatedDepth = current.camino.size();
-                open.add(current);
+
+                Estado ultimo = current.ultimo;
+                current.camino.remove(current.ultimo);
+                result.concatenate(current.camino);
+                open.add(new Path(ultimo));
+
+
+                System.out.printf("Current: %f\n",result.getHeuristic());
+                System.out.println(result);
+                System.out.println(ultimo);
+                System.out.println("-----------------------");
+
             }
             else{
                 ArrayList<Estado> vecinos = current.ultimo.calculaVecinos(this.colores);
@@ -77,6 +83,15 @@ class BFS{
                     else if(openResult){
                         //States are both on open, we check which one is better and add it to open
                         //the other is....deleted from open or forgotten
+                        System.out.println("CURRENT");
+                        System.out.println(currentPath);
+                        System.out.println();
+                        System.out.println("OPEN");
+                        System.out.println(openPath);
+                        
+
+
+
                         if(currentPath.getDepth() < openPath.getDepth()){
 
                                 open.remove(openPath);
@@ -87,8 +102,18 @@ class BFS{
                         else{
 
                         }
+
+                        return null;
                     }
                     else if(closedResult){
+                        System.out.println("CURRENT");
+                        System.out.println(currentPath);
+                        System.out.println();
+                        System.out.println("CLOSED");
+                        System.out.println(openPath);
+                        
+
+
                         //K
                         if(currentPath.getDepth() < closedPath.getDepth()){
 
@@ -97,6 +122,8 @@ class BFS{
 
 
                         }
+
+                        return null;
                     }
                 }
             }

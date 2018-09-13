@@ -29,7 +29,7 @@ public class Main{
             mat = generateMatrix(colors, size);
         }
         else{
-            mat = scanMatrix(colors);
+            mat = scanMatrix(colors,size);
         }
         //long startTime = System.nanoTime();
         Estado inicial = new Estado(mat);
@@ -52,8 +52,7 @@ public class Main{
        // System.out.println("Total time:" + duration/1000000000 + "." + duration%1000000000 );
     }
 
-    public static int[][] scanMatrix(int colors){
-        int size = sc.nextInt();
+    public static int[][] scanMatrix(int colors, int size){
         int matrix[][] = new int[size][size];
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){

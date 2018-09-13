@@ -41,9 +41,14 @@ class Path implements Comparable<Path>{
         ultimo = nuevo;
     }
 
+    void concatenate(ArrayList<Estado> arr){
+        this.camino.addAll(arr);
+        ultimo = this.camino.get((this.camino.size()-1));
+    }
+
     public int getDepth(){
         //System.out.printf("%d %d\n",camino.size(),truncatedDepth);
-        return camino.size()-truncatedDepth;
+        return camino.size();
     }
 
     public double getHeuristic(){
