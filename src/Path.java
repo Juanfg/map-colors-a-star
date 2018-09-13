@@ -55,13 +55,26 @@ class Path implements Comparable<Path>{
     }
 
     public int compareTo(Path other){
+        // 1 -> this > other
+        // 0 -> this = other
+        //-1 -> this < other
+
         //Compare last states. If last states are equal, compare depth
         Estado lastSelfState = this.ultimo;
         Estado lastOtherState = other.ultimo;
 
         int result = lastSelfState.compareTo(lastOtherState);
         if(result == 0){
-            return this.getDepth() - other.getDepth();
+            if(this.getDepth() > other.getDepth()){
+                return -1;
+            }
+            else if(this.getDepth() < other.getDepth()){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+            //return this.getDepth() - other.getDepth();
         }
         else{
             return result;

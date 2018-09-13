@@ -25,19 +25,24 @@ class BFS{
     }
 
     Path findBestPath(){
-        
-        System.out.println("Estado inicial: ");
-        System.out.println(this.inicial);
-
-
         int count = 0;
         while(open.size() != 0){
             Path current = open.poll();
-
-            if(++count%30 == 0){
+            if(++count%300 == 0){
                 System.out.printf("Current: %d\n",current.getHeuristic());
+                System.out.println(current);
+                System.out.println("-----------------------");
             }
             if(current.isGoal()){
+                /*
+                System.out.println("OPEN------------------------------------");
+                System.out.println(open);
+                System.out.println("OPEN------------------------------------");
+                */
+                System.out.println("Listo:");
+                System.out.println(current);
+                System.out.println("listo");
+                
                 return current;
             }
             else if( current.getDepth() >= this.profundidadMaxima ){

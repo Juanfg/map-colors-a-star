@@ -157,6 +157,8 @@ class Estado implements Comparable<Estado>{
         // 1 -> this > other
         // 0 -> this = other
         //-1 -> this < other
+        //PQ sorts in ascending order, the first being the lowest...means return 1 when one is BETTER....
+        //If it returns a positive, the guy will be first
 
         //compare matrix
         //if matrix are equal, return zero 
@@ -175,7 +177,17 @@ class Estado implements Comparable<Estado>{
             }
 
             if(areDifferent){
-                return this.adyacencyDegree - other.adyacencyDegree;
+                if(this.adyacencyDegree > other.adyacencyDegree){
+                    return -1;
+                }
+                else if(this.adyacencyDegree < other.adyacencyDegree){
+                    return 1;
+                }
+                else{
+                    return 0;
+                }
+
+                //return this.adyacencyDegree - other.adyacencyDegree;
             }
             else{
                 return 0;
