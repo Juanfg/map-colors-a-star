@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 class Estado implements Comparable<Estado>{
     int matrix[][];
-    int adyacencyDegree;
+    double adyacencyDegree;
 
     Estado(int matrix[][]){
         this.matrix = matrix;
@@ -94,8 +94,8 @@ class Estado implements Comparable<Estado>{
     }
     
     //NOTE :- Le toca a lozada. Actualmente solo suma cosas
-    int calculateAdyacencyDegree(){
-        int sum = 0;
+    double calculateAdyacencyDegree(){
+        double sum = 0;
         for(int i = 0; i < this.matrix.length; i++){
             for(int j = 0; j < this.matrix.length; j++){
                 sum+=this.matrix[i][j];
