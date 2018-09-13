@@ -9,42 +9,6 @@ import java.util.PriorityQueue;
 public class Main{
     public static Scanner sc = new Scanner(System.in);
 
-    public static void main2(String []args){
-        Estado uno    = new Estado(generateMatrix(3,5));
-        Estado dos    = new Estado(generateMatrix(3,5));
-        Estado tres   = new Estado(generateMatrix(3,5));
-        Estado cuatro = new Estado(generateMatrix(3,5));
-        Estado cinco  = new Estado(generateMatrix(3,5));
-        Estado seis   = new Estado(generateMatrix(3,5));
-        Path p1 = new Path();
-        Path p2 = new Path();
-
-        p1.add(uno);
-        p1.add(dos);
-        p2.add(tres);
-        p2.add(cuatro);
-
-        p2.add(dos);
-
-
-        PriorityQueue<Path> open = new PriorityQueue<Path>();
-
-        open.add(p1);
-        open.add(p2);
-
-       
-       System.out.println(p1);
-       System.out.println(p2);
-
-        System.out.println("Compare");
-       System.out.println(p1.compareTo(p2));
-       System.out.println("End Compare");
-
-       System.out.println("The winner is:::");
-       System.out.println(open.peek());
-
-    }
-
     public static void main(String []args){
 
         int size = 0;

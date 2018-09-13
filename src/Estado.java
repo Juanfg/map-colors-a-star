@@ -209,10 +209,10 @@ class Estado implements Comparable<Estado>{
 
             if(areDifferent){
                 if(this.adyacencyDegree > other.adyacencyDegree){
-                    return -1;
+                    return 1;
                 }
                 else if(this.adyacencyDegree < other.adyacencyDegree){
-                    return 1;
+                    return -1;
                 }
                 else{
                     return 0;

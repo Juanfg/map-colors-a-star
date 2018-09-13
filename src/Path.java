@@ -66,10 +66,10 @@ class Path implements Comparable<Path>{
         int result = lastSelfState.compareTo(lastOtherState);
         if(result == 0){
             if(this.getDepth() > other.getDepth()){
-                return -1;
+                return 1;
             }
             else if(this.getDepth() < other.getDepth()){
-                return 1;
+                return -1;
             }
             else{
                 return 0;

@@ -17,7 +17,7 @@ class BFS{
     BFS(Estado inicial, int colores){
         this.open = new PriorityQueue<Path>();
         this.closed = new ArrayList<Path>();
-
+        
         this.inicial = inicial;
         open.add(new Path(inicial));
         this.colores = colores;
@@ -28,8 +28,9 @@ class BFS{
         int count = 0;
         while(open.size() != 0){
             Path current = open.poll();
-            if(++count%300 == 0){
-                System.out.printf("Current: %d\n",current.getHeuristic());
+            
+            if(++count%30 == 0){
+                System.out.printf("Current: %f\n",current.getHeuristic());
                 System.out.println(current);
                 System.out.println("-----------------------");
             }
@@ -68,13 +69,20 @@ class BFS{
                     boolean closedResult = (closedPath != null);
                     if(!openResult && !closedResult){
                         open.add(currentPath);
+                        /*if(currentPath.getHeuristic() < current.getHeuristic()){
+                            open.add(currentPath);
+                        }*/
+                        
                     }
                     else if(openResult){
                         //States are both on open, we check which one is better and add it to open
                         //the other is....deleted from open or forgotten
                         if(currentPath.getDepth() < openPath.getDepth()){
-                            open.remove(openPath);
-                            open.add(currentPath);
+
+                                open.remove(openPath);
+                                open.add(currentPath);
+
+                            
                         }
                         else{
 
@@ -83,8 +91,11 @@ class BFS{
                     else if(closedResult){
                         //K
                         if(currentPath.getDepth() < closedPath.getDepth()){
-                            closed.remove(closedPath);
-                            open.add(currentPath);
+
+                                closed.remove(closedPath);
+                                open.add(currentPath);
+
+
                         }
                     }
                 }
