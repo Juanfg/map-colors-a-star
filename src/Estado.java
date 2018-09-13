@@ -107,6 +107,10 @@ class Estado implements Comparable<Estado>{
         double region2 = 0;
         double region3 = 0;
         double region4 = 0;
+        double hori1 = 0;
+        double hori2 = 0;
+        double hori3 = 0;
+        double hori4 = 0;
         int maxAdjacencies = (regionSize - 1) * regionSize * 2;
         if(this.matrix.length%2 == 0){
             regionSize++;
@@ -121,6 +125,7 @@ class Estado implements Comparable<Estado>{
                 if(j < regionSize-1){
                     if(this.matrix[i][j] == this.matrix[i][j+1]){
                         region1++;
+                        hori1++;
                     }
                 }
             }
@@ -135,6 +140,7 @@ class Estado implements Comparable<Estado>{
                 if(j < this.matrix.length-1){
                     if(this.matrix[i][j] == this.matrix[i][j+1]){
                         region2++;
+                        hori2++;
                     }
                 }
             }
@@ -149,6 +155,7 @@ class Estado implements Comparable<Estado>{
                 if(j < regionSize-1){
                     if(this.matrix[i][j] == this.matrix[i][j+1]){
                         region3++;
+                        hori3++;
                     }
                 }
             }
@@ -163,6 +170,7 @@ class Estado implements Comparable<Estado>{
                 if(j < this.matrix.length-1){
                     if(this.matrix[i][j] == this.matrix[i][j+1]){
                         region4++;
+                        hori4++;
                     }
                 }
             }
@@ -171,9 +179,14 @@ class Estado implements Comparable<Estado>{
         region2 /= (double)maxAdjacencies;
         region3 /= (double)maxAdjacencies;
         region4 /= (double)maxAdjacencies;
+        hori1 /= (double)maxAdjacencies;
+        hori2 /= (double)maxAdjacencies;
+        hori3 /= (double)maxAdjacencies;
+        hori4 /= (double)maxAdjacencies;
 
         avg = (double)(region1+region2+region3+region4)/4.0;
-        return avg;
+        double hori = (double)(hori1+hori2+hori3+hori4)/4.0;
+        return (avg+hori)/2;
     }
 
     public static int [][] copyMatrix(int [][] mat){
