@@ -46,12 +46,12 @@ class Path implements Comparable<Path>{
         return camino.size()-truncatedDepth;
     }
 
-    public int getHeuristic(){
+    public double getHeuristic(){
         return this.ultimo.adyacencyDegree;
     }
 
     public boolean isGoal(){
-        return this.getHeuristic() == 0;
+        return this.getHeuristic() == 0.0;
     }
 
     public int compareTo(Path other){
