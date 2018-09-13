@@ -88,17 +88,6 @@ class Estado implements Comparable<Estado>{
         
         return this.matrix.length * 2;
     }
-    
-    //NOTE :- Le toca a lozada. Actualmente solo suma cosas
-    double calculateAdyacencyDegree(){
-        double sum = 0;
-        for(int i = 0; i < this.matrix.length; i++){
-            for(int j = 0; j < this.matrix.length; j++){
-                sum+=this.matrix[i][j];
-            }
-        }
-        return sum;
-    }
 
     public static int[][] generateMatrix(int colors, int size){
         Random r = new Random(System.nanoTime());
@@ -114,10 +103,11 @@ class Estado implements Comparable<Estado>{
     public double countAdjacencies(){
         double avg = 0;
         int regionSize = (int)Math.ceil(this.matrix.length/2.0);
-        int region1 = 0;
-        int region2 = 0;
-        int region3 = 0;
-        int region4 = 0;
+        double region1 = 0;
+        double region2 = 0;
+        double region3 = 0;
+        double region4 = 0;
+        int maxAdjacencies = (regionSize - 1) * regionSize * 2;
         if(this.matrix.length%2 == 0){
             regionSize++;
         }
@@ -177,6 +167,11 @@ class Estado implements Comparable<Estado>{
                 }
             }
         }
+        region1 /= (double)maxAdjacencies;
+        region2 /= (double)maxAdjacencies;
+        region3 /= (double)maxAdjacencies;
+        region4 /= (double)maxAdjacencies;
+
         avg = (double)(region1+region2+region3+region4)/4.0;
         return avg;
     }
