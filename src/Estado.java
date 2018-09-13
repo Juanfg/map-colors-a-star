@@ -104,7 +104,7 @@ class Estado implements Comparable<Estado>{
         return sum;
     }
 
-    public int countAdjacencies(){
+    public double countAdjacencies(){
         double avg = 0;
         int regionSize = (int)Math.ceil(this.matrix.length/2.0);
         int region1 = 0;
@@ -170,8 +170,8 @@ class Estado implements Comparable<Estado>{
                 }
             }
         }
-        avg = (region1+region2+region3+region4)/4.0;
-        return (int)Math.round(avg);
+        avg = (double)(region1+region2+region3+region4)/4.0;
+        return avg;
     }
 
     public static int [][] copyMatrix(int [][] mat){

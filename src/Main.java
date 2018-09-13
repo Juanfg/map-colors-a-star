@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 public class Main{
     public static Scanner sc = new Scanner(System.in);
 
-    public static void main(String []args){
+    public static void main2(String []args){
         Estado uno    = new Estado(generateMatrix(3,5));
         Estado dos    = new Estado(generateMatrix(3,5));
         Estado tres   = new Estado(generateMatrix(3,5));
@@ -45,7 +45,7 @@ public class Main{
 
     }
 
-    public static void main2(String []args){
+    public static void main(String []args){
 
         int size = 0;
         int mat[][];
