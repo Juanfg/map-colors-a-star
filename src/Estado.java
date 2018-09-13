@@ -105,42 +105,73 @@ class Estado implements Comparable<Estado>{
     }
 
     public int countAdjacencies(){
-        int [][] copy = copyMatrix(this.matrix);
-        int adjacencies = 0;
-        for(int row = 0; row < copy.length; row++){
-            for(int col = 0; col < copy[0].length; col++){
-                if(col > 0){ //can go left
-                    if(copy[row][col-1] != -1){
-                        if(copy[row][col-1] ==  copy[row][col]){
-                            adjacencies++;
-                        }
+        double avg = 0;
+        int regionSize = (int)Math.ceil(this.matrix.length/2.0);
+        int region1 = 0;
+        int region2 = 0;
+        int region3 = 0;
+        int region4 = 0;
+        if(this.matrix.length%2 == 0){
+            regionSize++;
+        }
+        for(int i = 0; i < regionSize; i++){
+            for(int j = 0; j < regionSize; j++){
+                if(i < regionSize-1){
+                    if(this.matrix[i][j] == this.matrix[i+1][j]){
+                        region1++;
                     }
                 }
-                if(col+1 < copy.length){ //can go right
-                    if(copy[row][col+1] != -1){
-                        if(copy[row][col+1] ==  copy[row][col]){
-                            adjacencies++;
-                        }
+                if(j < regionSize-1){
+                    if(this.matrix[i][j] == this.matrix[i][j+1]){
+                        region1++;
                     }
                 }
-                if(row > 0){ //can go up
-                    if(copy[row-1][col] != -1){
-                        if(copy[row-1][col] ==  copy[row][col]){
-                            adjacencies++;
-                        }
-                    }
-                }   
-                if(row+1 < copy.length){ //can go down
-                    if(copy[row+1][col] != -1){
-                        if(copy[row+1][col] ==  copy[row][col]){
-                            adjacencies++;
-                        }
-                    }
-                }
-                copy[row][col] = -1;
             }
         }
-        return adjacencies;
+        for(int i = 0; i < regionSize; i++){
+            for(int j = this.matrix.length - regionSize; j < this.matrix.length; j++){
+                if(i < regionSize-1){
+                    if(this.matrix[i][j] == this.matrix[i+1][j]){
+                        region2++;
+                    }
+                }
+                if(j < this.matrix.length-1){
+                    if(this.matrix[i][j] == this.matrix[i][j+1]){
+                        region2++;
+                    }
+                }
+            }
+        }
+        for(int i = this.matrix.length - regionSize; i < this.matrix.length; i++){
+            for(int j = 0; j < regionSize; j++){
+                if(i < this.matrix.length-1){
+                    if(this.matrix[i][j] == this.matrix[i+1][j]){
+                        region3++;
+                    }
+                }
+                if(j < regionSize-1){
+                    if(this.matrix[i][j] == this.matrix[i][j+1]){
+                        region3++;
+                    }
+                }
+            }
+        }
+        for(int i = this.matrix.length - regionSize; i < this.matrix.length; i++){
+            for(int j = this.matrix.length - regionSize; j < this.matrix.length; j++){
+                if(i < this.matrix.length-1){
+                    if(this.matrix[i][j] == this.matrix[i+1][j]){
+                        region4++;
+                    }
+                }
+                if(j < this.matrix.length-1){
+                    if(this.matrix[i][j] == this.matrix[i][j+1]){
+                        region4++;
+                    }
+                }
+            }
+        }
+        avg = (region1+region2+region3+region4)/4.0;
+        return (int)Math.round(avg);
     }
 
     public static int [][] copyMatrix(int [][] mat){
