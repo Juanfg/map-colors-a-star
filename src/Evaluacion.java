@@ -1,6 +1,6 @@
-    double calculateAdyacencyDegree(){
+    int calculateAdyacencyDegree(){
         double avg = 0;
-        int regionSize = ceil(this.matrix.length/2.0);
+        int regionSize = Math.ceil(this.matrix.length/2.0);
         int region1 = 0;
         int region2 = 0;
         int region3 = 0;
@@ -65,5 +65,5 @@
             }
         }
         avg = (region1+region2+region3+region4)/4.0;
-        return avg;
+        return Math.round(avg);
     }
