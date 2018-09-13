@@ -8,13 +8,16 @@ class BFS{
     PriorityQueue<Path> open;
     ArrayList<Path> closed;
 
+    //Remembers the path being solved
     Path result;
     int profundidadMaxima;
     int colores;
 
+    //Identifies the open and closed collections
     static final int openValue = 0;
     static final int closedValue = 1;
 
+    //Constructor
     BFS(Estado inicial, int colores){
         this.open = new PriorityQueue<Path>();
         this.closed = new ArrayList<Path>();
@@ -30,17 +33,8 @@ class BFS{
     Path findBestPath(){
         int count = 0;
         while(open.size() != 0){
-            
-            //System.out.println(open.size()  + "," + closed.size());
-
             Path current = open.poll();
-            
-            /*if(++count%300 == 0){
-                System.out.printf("Current: %f\n",current.getHeuristic());
-                System.out.println(current);
-                System.out.println("-----------------------");
-            }
-            */
+            //If the current state is the goal, return it
             if(current.isGoal()){
                 result.concatenate(current.camino);
                 System.out.println("Listo:");
@@ -48,6 +42,7 @@ class BFS{
                 System.out.println("listo");                
                 return result;
             }
+            //If we've passed the limit, we kill everything
             else if( current.getDepth() >= this.profundidadMaxima ){
                 open.clear();
                 closed.clear();
@@ -56,22 +51,12 @@ class BFS{
                 current.camino.remove(current.ultimo);
                 result.concatenate(current.camino);
                 open.add(new Path(ultimo));
-
-
-                System.out.printf("Current: %f\n",result.getHeuristic());
-                //System.out.println(result);
-                //System.out.println(ultimo);
-                System.out.println("-----------------------");
-
             }
             else{
+                //Keeps looking for neighbours
                 boolean improvec = false;
-
                 while(!improvec){
-                    ArrayList<Estado> vecinos = current.ultimo.calculaVecinos(this.colores);
-                    //Collections.shuffle(vecinos);
-
-                    
+                    ArrayList<Estado> vecinos = current.ultimo.calculaVecinos(this.colores);                    
                     for(int i = 0; i < vecinos.size(); i++){
                         System.out.println("To beat:" + current.ultimo.adyacencyDegree +   "Neighobuour:" + vecinos.get(i).adyacencyDegree);
                         Path currentPath = current.clonaPath();
@@ -144,7 +129,6 @@ class BFS{
         return null;
 
     }
-    
 
     int calculaHorizonte(){
         long maxMemory = Runtime.getRuntime().maxMemory();

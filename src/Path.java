@@ -1,10 +1,14 @@
 import java.util.ArrayList;
 
 class Path implements Comparable<Path>{
+    //Each path hast an arraylist of states, the path per se
     ArrayList<Estado> camino;
+    //And a reference to the last state added
     Estado ultimo;
+    //This considers the depth cut by the horizontal limit
     int truncatedDepth;
 
+    //COnstructors
     Path(){
         this.camino = new ArrayList<Estado>();
         ultimo = null;
@@ -24,6 +28,7 @@ class Path implements Comparable<Path>{
         truncatedDepth = 0;
     }
 
+    //USed when generating new neighbours
     Path clonaPath(){
         ArrayList<Estado> newCamino = new ArrayList<Estado>(camino.size());
         for(int i = 0; i < camino.size(); i++){
@@ -36,25 +41,30 @@ class Path implements Comparable<Path>{
 
     }
 
+    //Adds a new state to the path
     void add(Estado nuevo){
         this.camino.add(nuevo);
         ultimo = nuevo;
     }
 
+    //Concatenates an arraylist to this path
     void concatenate(ArrayList<Estado> arr){
         this.camino.addAll(arr);
         ultimo = this.camino.get((this.camino.size()-1));
     }
 
+    //Gets depth of path
     public int getDepth(){
         //System.out.printf("%d %d\n",camino.size(),truncatedDepth);
         return camino.size();
     }
 
+    //Get heuristic of LAST state
     public double getHeuristic(){
         return this.ultimo.adyacencyDegree;
     }
 
+    //Checks if this path is goal
     public boolean isGoal(){
         return this.getHeuristic() == 0.0;
     }
