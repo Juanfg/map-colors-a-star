@@ -17,13 +17,10 @@ class Estado implements Comparable<Estado>{
         return nuevo;
     }
     ArrayList<Estado> calculaVecinos(int colors){
-        //int numeroVecinos = (int)Math.pow(colors-1,Math.pow(this.matrix.length,2));
-
-        int numeroVecinos = calculaNumeroVecinos(this.matrix.length,colors);
-            //int numeroVecinos = this.calculaNumeroVecinos(this.matrix.length);
+        /*
+        //int numeroVecinos = (colors-1)*(int)Math.pow(length,2);
         ArrayList<Estado> vecinos = new ArrayList<Estado>(numeroVecinos);
         Random r = new Random();
-
 
         for(int row = 0; row < this.matrix.length; row++){
             for(int col = 0; col < this.matrix.length; col++){
@@ -42,55 +39,54 @@ class Estado implements Comparable<Estado>{
 
         //System.out.printf("%d == %d ??\n",index,numeroVecinos);
 
-        return vecinos;
-
-        /*
-        int currentColor;
-        int newColor;
-        int index;
-        int col1;
-        int col2;
-        for(int i = 0; i < numeroVecinos; i+=2){
-            //0 2 4 6 8 <-- i
-            //0 1 2 3 4 <-- index
-            index = i/2;
-            col1 = r.nextInt(this.matrix.length);
-            col2 = col1;
-            while(col2 == col1){
-                col2 = r.nextInt(this.matrix.length);
-            }
-
-            int m1[][] = copyMatrix(this.matrix);
-            int m2[][] = copyMatrix(this.matrix);
-
-            currentColor =  m1[index][col1];
-            newColor = currentColor;
-            while(currentColor == newColor){
-                newColor = r.nextInt(colors);
-            }
-            m1[index][col1] = newColor;
-
-
-            currentColor =  m2[index][col2];
-            newColor = currentColor;
-            while(currentColor == newColor){
-                newColor = r.nextInt(colors);
-            }
-            m2[index][col2] = newColor;
-
-
-            Estado e1 = new Estado(m1);
-            Estado e2 = new Estado(m2);
-            vecinos[i] = e1;
-            vecinos[i+1] = e2;
-        }
-        return vecinos;
+        
         */
+
+        int numeroVecinos = calculaNumeroVecinos(this.matrix.length,colors);
+        int numeroVecinos2 = numeroVecinos += (colors-1)*(int)Math.pow(this.matrix.length,2);
+        ArrayList<Estado> vecinos = new ArrayList<Estado>(numeroVecinos+numeroVecinos2 + 10);
+        Random r = new Random();
+
+        for(int i = 0; i < numeroVecinos; i++){
+            int mat[][] = copyMatrix(this.matrix);
+            for(int j = 0; j < this.matrix.length; j++){
+                int randCell = r.nextInt(this.matrix.length);
+                int randColor = mat[j][randCell];
+                while(randColor == mat[j][randCell]){
+                    randColor = r.nextInt(colors);
+                }
+                mat[j][randCell] = randColor;
+            } 
+            vecinos.add(new Estado(mat));
+        }
+
+
+        for(int row = 0; row < this.matrix.length; row++){
+            for(int col = 0; col < this.matrix.length; col++){
+                for(int paint = 0; paint < colors; paint++){
+                    if(paint == this.matrix[row][col]){
+                        
+                    }
+                    else{
+                        int mat[][] = copyMatrix(this.matrix);
+                        mat[row][col] = paint;
+                        vecinos.add(new Estado(mat));
+                    }
+                }
+            }
+        }
+
+        for(int i = 0; i < 10; i++ ){
+            vecinos.add(new Estado(generateMatrix(colors,this.matrix.length)));
+        }
+
+        
+        return vecinos;
     }
 
     int calculaNumeroVecinos(int length, int colors){
         
-        return (colors-1)*(int)Math.pow(length,2);
+        return this.matrix.length * 2;
     }
     
     //NOTE :- Le toca a lozada. Actualmente solo suma cosas
@@ -102,6 +98,17 @@ class Estado implements Comparable<Estado>{
             }
         }
         return sum;
+    }
+
+    public static int[][] generateMatrix(int colors, int size){
+        Random r = new Random(System.nanoTime());
+        int matrix[][] = new int[size][size];
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                matrix[i][j] = r.nextInt(colors);
+            }
+        }
+        return matrix;
     }
 
     public double countAdjacencies(){

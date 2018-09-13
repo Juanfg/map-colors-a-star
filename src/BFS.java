@@ -24,11 +24,15 @@ class BFS{
         this.colores = colores;
         this.result = new Path();
         this.profundidadMaxima = this.calculaHorizonte();
+
     }
 
     Path findBestPath(){
         int count = 0;
         while(open.size() != 0){
+            
+            //System.out.println(open.size()  + "," + closed.size());
+
             Path current = open.poll();
             
             /*if(++count%300 == 0){
@@ -55,77 +59,55 @@ class BFS{
 
 
                 System.out.printf("Current: %f\n",result.getHeuristic());
-                System.out.println(result);
-                System.out.println(ultimo);
+                //System.out.println(result);
+                //System.out.println(ultimo);
                 System.out.println("-----------------------");
 
             }
             else{
-                ArrayList<Estado> vecinos = current.ultimo.calculaVecinos(this.colores);
-                //Collections.shuffle(vecinos);
-                for(int i = 0; i < vecinos.size(); i++){
-                    Path currentPath = current.clonaPath();
-                    currentPath.add(vecinos.get(i));
-                    //Not in open nor closed
-                    //in order to check in open we must iterate through open and check ultimo in each path in open and see if current.ultimo is in each path. If it exists, check the length of the path in open. If it is bigger than the path of current, delete path in open and add current
-                    Path openPath   = this.fetchPath(openValue,currentPath.ultimo);
-                    Path closedPath = this.fetchPath(closedValue,currentPath.ultimo);
-                    //If null, not in list, which means false
-                    boolean openResult   = (openPath != null);
-                    boolean closedResult = (closedPath != null);
-                    if(!openResult && !closedResult){
-                        open.add(currentPath);
-                        /*if(currentPath.getHeuristic() < current.getHeuristic()){
+                boolean improvec = false;
+
+                while(!improvec){
+                    ArrayList<Estado> vecinos = current.ultimo.calculaVecinos(this.colores);
+                    //Collections.shuffle(vecinos);
+
+                    
+                    for(int i = 0; i < vecinos.size(); i++){
+                        System.out.println("To beat:" + current.ultimo.adyacencyDegree +   "Neighobuour:" + vecinos.get(i).adyacencyDegree);
+                        Path currentPath = current.clonaPath();
+                        currentPath.add(vecinos.get(i));
+
+                        if(currentPath.ultimo.adyacencyDegree <= current.ultimo.adyacencyDegree){
+                            improvec = true;
+                            System.out.println("Improve!");
+                        }
+
+                        //Not in open nor closed
+                        //in order to check in open we must iterate through open and check ultimo in each path in open and see if current.ultimo is in each path. If it exists, check the length of the path in open. If it is bigger than the path of current, delete path in open and add current
+                        Path openPath   = this.fetchPath(openValue,currentPath.ultimo);
+                        Path closedPath = this.fetchPath(closedValue,currentPath.ultimo);
+                        //If null, not in list, which means false
+                        boolean openResult   = (openPath != null); //open != null -> true -> encontré algo en open -> entro al if
+                        boolean closedResult = (closedPath != null);
+                        if(!openResult && !closedResult){
                             open.add(currentPath);
-                        }*/
-                        
-                    }
-                    else if(openResult){
-                        //States are both on open, we check which one is better and add it to open
-                        //the other is....deleted from open or forgotten
-                        System.out.println("CURRENT");
-                        System.out.println(currentPath);
-                        System.out.println();
-                        System.out.println("OPEN");
-                        System.out.println(openPath);
-                        
-
-
-
-                        if(currentPath.getDepth() < openPath.getDepth()){
-
-                                open.remove(openPath);
-                                open.add(currentPath);
-
-                            
                         }
-                        else{
-
+                        else if(openResult){
+                            if(currentPath.getDepth() < openPath.getDepth()){
+                                    open.remove(openPath);
+                                    open.add(currentPath);                            
+                            }
                         }
-
-                        return null;
-                    }
-                    else if(closedResult){
-                        System.out.println("CURRENT");
-                        System.out.println(currentPath);
-                        System.out.println();
-                        System.out.println("CLOSED");
-                        System.out.println(openPath);
-                        
-
-
-                        //K
-                        if(currentPath.getDepth() < closedPath.getDepth()){
-
-                                closed.remove(closedPath);
-                                open.add(currentPath);
-
-
+                        else if(closedResult){
+                            //K
+                            if(currentPath.getDepth() < closedPath.getDepth()){
+                                    closed.remove(closedPath);
+                                    open.add(currentPath);
+                            }
                         }
-
-                        return null;
                     }
                 }
+
             }
             closed.add(current);  
         }
