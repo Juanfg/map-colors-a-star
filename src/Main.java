@@ -36,6 +36,10 @@ public class Main{
        System.out.println(p1);
        System.out.println(p2);
 
+        System.out.println("Compare");
+       System.out.println(p1.compareTo(p2));
+       System.out.println("End Compare");
+
        System.out.println("The winner is:::");
        System.out.println(open.peek());
 
